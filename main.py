@@ -23,7 +23,7 @@ def collect_and_save():
         print("Не удалось получить данные о погоде")
 
 # Планируем задачу
-schedule.every().day.at("19:27").do(collect_and_save)
+schedule.every().day.at("13:57").do(collect_and_save)
 
 if __name__ == "__main__":
     print("Планировщик запущен. Сбор данных каждый день в 10:00")
