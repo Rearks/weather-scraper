@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 
 def analyze_weather(filename="weather1.csv"):
     with open("weather1.csv", "r", encoding="utf-8") as f:
