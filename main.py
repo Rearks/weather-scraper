@@ -1,31 +1,32 @@
 from Skrapper import get_today_weather
 import csv
 from datetime import datetime
-import pandas as pd
 import os
+import schedule
+import time
 
 def save_data(day, temp, filename="weather1.csv"):
-    file_exists = os.path.exists(filename)
-
+    file_exists =  os.path.exists(filename)
     with open(filename, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        if not file_exists:  # если файла не было
+        if not file_exists:
             writer.writerow(["timestamp", "date", "temp"])
         writer.writerow([datetime.now().isoformat(), day, temp])
 
-
-def main():
+def collect_and_save():
     result = get_today_weather()
     if result is not None:
         day, temp = result
         save_data(day, temp)
-        print(f"Получена температура: {temp}")
+        print(f"Сохранено: {day} - {temp}")
     else:
         print("Не удалось получить данные о погоде")
 
-
-
-    print(f"Сохранено: {day} - {temp}")
+# Планируем задачу
+schedule.every().day.at("13:57").do(collect_and_save)
 
 if __name__ == "__main__":
-    main()
+    print("Планировщик запущен. Сбор данных каждый день в 10:00")
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
